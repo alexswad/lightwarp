@@ -1,0 +1,12 @@
+{
+	"title"		:	"Advanced Lightwarp Editor",
+	"type"		:	"tool",
+	"tags"		:	["Movie", "Scenic"],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*",
+		"*.md*"
+	]
+}
