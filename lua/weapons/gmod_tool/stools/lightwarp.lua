@@ -361,22 +361,24 @@ else
 
 	-- Fix Adv Bonemerge
 	local oldbm
-	timer.Simple(5, function()
-		oldbm = oldbm or CreateAdvBonemergeEntity
-		if not oldbm then return end
-		function CreateAdvBonemergeEntity(target, parent, ply, alwaysreplace, keepparentempty, matchnames, x, y)
-			if not IsValid(target) then return end
-			local emats = {}
-			for k, v in pairs(target:GetMaterials()) do
-				emats[k - 1] = target:GetSubMaterial(k - 1)
-			end
+	hook.Add("InitPostEntity", "LW_FixBM", function()
+		timer.Simple(5, function()
+			oldbm = oldbm or CreateAdvBonemergeEntity
+			if not oldbm then return end
+			function CreateAdvBonemergeEntity(target, parent, ply, alwaysreplace, keepparentempty, matchnames, x, y)
+				if not IsValid(target) then return end
+				local emats = {}
+				for k, v in pairs(target:GetMaterials()) do
+					emats[k - 1] = target:GetSubMaterial(k - 1)
+				end
 
-			local ent = oldbm(target, parent, ply, alwaysreplace, keepparentempty, matchnames, x, y)
-			if not IsValid(ent) then return end
-			for k, v in pairs(emats) do
-				ent:SetSubMaterial(k, v)
+				local ent = oldbm(target, parent, ply, alwaysreplace, keepparentempty, matchnames, x, y)
+				if not IsValid(ent) then return end
+				for k, v in pairs(emats) do
+					ent:SetSubMaterial(k, v)
+				end
+				return ent
 			end
-			return ent
-		end
+		end)
 	end)
 end
